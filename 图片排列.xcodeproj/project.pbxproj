@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		643668961C0FE0000066B9AD /* CommenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 643668951C0FE0000066B9AD /* CommenViewController.m */; };
+		643668981C0FF6980066B9AD /* gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643668971C0FF6980066B9AD /* gif.gif */; };
 		64578A0F1C0C3D520015DED7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 64578A0E1C0C3D520015DED7 /* main.m */; };
 		64578A121C0C3D520015DED7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64578A111C0C3D520015DED7 /* AppDelegate.m */; };
 		64578A151C0C3D520015DED7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64578A141C0C3D520015DED7 /* ViewController.m */; };
 		64578A181C0C3D520015DED7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64578A161C0C3D520015DED7 /* Main.storyboard */; };
 		64578A1A1C0C3D520015DED7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64578A191C0C3D520015DED7 /* Assets.xcassets */; };
 		64578A1D1C0C3D520015DED7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64578A1B1C0C3D520015DED7 /* LaunchScreen.storyboard */; };
+		64578A261C0C3EB00015DED7 /* FZViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 64578A251C0C3EB00015DED7 /* FZViewItem.m */; };
+		64578A2C1C0C46BE0015DED7 /* deletbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 64578A271C0C46BE0015DED7 /* deletbutton.png */; };
+		64F0D2F61C0EECD0000AEBB5 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F0D2F51C0EECD0000AEBB5 /* ListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		643668941C0FE0000066B9AD /* CommenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommenViewController.h; sourceTree = "<group>"; };
+		643668951C0FE0000066B9AD /* CommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommenViewController.m; sourceTree = "<group>"; };
+		643668971C0FF6980066B9AD /* gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gif.gif; sourceTree = "<group>"; };
 		64578A0A1C0C3D520015DED7 /* 图片排列.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "图片排列.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64578A0E1C0C3D520015DED7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		64578A101C0C3D520015DED7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +34,11 @@
 		64578A191C0C3D520015DED7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64578A1C1C0C3D520015DED7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64578A1E1C0C3D520015DED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64578A241C0C3EB00015DED7 /* FZViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZViewItem.h; sourceTree = "<group>"; };
+		64578A251C0C3EB00015DED7 /* FZViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZViewItem.m; sourceTree = "<group>"; };
+		64578A271C0C46BE0015DED7 /* deletbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletbutton.png; sourceTree = "<group>"; };
+		64F0D2F41C0EECD0000AEBB5 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		64F0D2F51C0EECD0000AEBB5 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +56,6 @@
 			isa = PBXGroup;
 			children = (
 				64578A0C1C0C3D520015DED7 /* 图片排列 */,
-				64578A0B1C0C3D520015DED7 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +65,7 @@
 				64578A0A1C0C3D520015DED7 /* 图片排列.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		64578A0C1C0C3D520015DED7 /* 图片排列 */ = {
@@ -60,10 +73,19 @@
 			children = (
 				64578A101C0C3D520015DED7 /* AppDelegate.h */,
 				64578A111C0C3D520015DED7 /* AppDelegate.m */,
+				64F0D2F41C0EECD0000AEBB5 /* ListViewController.h */,
+				64F0D2F51C0EECD0000AEBB5 /* ListViewController.m */,
+				643668941C0FE0000066B9AD /* CommenViewController.h */,
+				643668951C0FE0000066B9AD /* CommenViewController.m */,
 				64578A131C0C3D520015DED7 /* ViewController.h */,
 				64578A141C0C3D520015DED7 /* ViewController.m */,
+				64578A0B1C0C3D520015DED7 /* Products */,
+				64578A241C0C3EB00015DED7 /* FZViewItem.h */,
+				64578A251C0C3EB00015DED7 /* FZViewItem.m */,
 				64578A161C0C3D520015DED7 /* Main.storyboard */,
 				64578A191C0C3D520015DED7 /* Assets.xcassets */,
+				64578A271C0C46BE0015DED7 /* deletbutton.png */,
+				643668971C0FF6980066B9AD /* gif.gif */,
 				64578A1B1C0C3D520015DED7 /* LaunchScreen.storyboard */,
 				64578A1E1C0C3D520015DED7 /* Info.plist */,
 				64578A0D1C0C3D520015DED7 /* Supporting Files */,
@@ -137,9 +159,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64578A2C1C0C46BE0015DED7 /* deletbutton.png in Resources */,
 				64578A1D1C0C3D520015DED7 /* LaunchScreen.storyboard in Resources */,
 				64578A1A1C0C3D520015DED7 /* Assets.xcassets in Resources */,
 				64578A181C0C3D520015DED7 /* Main.storyboard in Resources */,
+				643668981C0FF6980066B9AD /* gif.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +174,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64F0D2F61C0EECD0000AEBB5 /* ListViewController.m in Sources */,
+				643668961C0FE0000066B9AD /* CommenViewController.m in Sources */,
 				64578A151C0C3D520015DED7 /* ViewController.m in Sources */,
+				64578A261C0C3EB00015DED7 /* FZViewItem.m in Sources */,
 				64578A121C0C3D520015DED7 /* AppDelegate.m in Sources */,
 				64578A0F1C0C3D520015DED7 /* main.m in Sources */,
 			);
@@ -263,6 +290,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "图片排列/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "github.com-xiefangzhenz.----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -274,6 +302,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "图片排列/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "github.com-xiefangzhenz.----";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -299,6 +328,7 @@
 				64578A231C0C3D520015DED7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

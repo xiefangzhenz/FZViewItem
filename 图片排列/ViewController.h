@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
+#import "FZViewItem.h"
+#import "ListViewController.h"
+#import "CommenViewController.h"
+@interface ViewController : UIViewController<FZViewItemDelegate>
 
 
 @end
