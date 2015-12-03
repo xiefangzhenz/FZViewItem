@@ -1,4 +1,4 @@
-
+#Xcode7以下，请删除LaunchScreen.storyboard
 1，仿支付宝可以添加删除移动图标。
 
 2，每个不同的图标进入不同的controller.
