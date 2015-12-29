@@ -127,6 +127,7 @@
 		64578A021C0C3D520015DED7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = JKL;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "谢方振";
 				TargetAttributes = {

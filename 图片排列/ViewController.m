@@ -9,16 +9,18 @@
 #import "FZViewItem.h"
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<UIGestureRecognizerDelegate>
 {
-    //所有button放在上面
-    UIView* bgView;
+
     
     NSMutableArray* viewItemArr;
     
     UIButton* _addButton;
     
     NSMutableArray* _dataList;
+    
+    UIScrollView* _scrollView;
+
 }
 @end
 
@@ -27,6 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor greenColor];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSArray* arr = [[NSUserDefaults standardUserDefaults]objectForKey:@"viewItemData"];
     
@@ -66,48 +71,77 @@
     viewItemArr  = [[NSMutableArray alloc]init];
     
     
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 300)];
     
-    bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 600)];
+//    _scrollView.showsHorizontalScrollIndicator = NO;
     
-    [self.view addSubview:bgView];
+    _scrollView.showsVerticalScrollIndicator  = NO;
+    
+    _scrollView.scrollEnabled = YES;
+    
+    _scrollView.pagingEnabled = YES;
+    
+    _scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+    
+    _scrollView.delegate = self;
+    
+    _scrollView.directionalLockEnabled = YES;
+    
+    [self.view addSubview:_scrollView];
     
     _addButton = [[UIButton alloc]init];
-    _addButton.titleLabel.text = @"添加";
-    _addButton.titleLabel.textColor = [UIColor blackColor];
+    
     _addButton.frame = CGRectMake(0, 0, 100, 100);
-    _addButton.backgroundColor = [UIColor grayColor];
+    
+    [_addButton setTitle:@"添加" forState:UIControlStateNormal];
+    
+    [_addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
     [_addButton addTarget:self action:@selector(pushListController) forControlEvents:UIControlEventTouchUpInside];
     
     //显示按钮，如果没有就只显示添加
+    [_scrollView setContentSize:CGSizeMake(SCREEN_WIDTH*((_dataList.count/8)+1), 1)];
+    
+    _scrollView.backgroundColor = [UIColor redColor];
+    
     for (int i = 0; i<_dataList.count; i++) {
-            
-            FZViewItem* viewItem = [[FZViewItem alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-5*10)/4*(i%4)+(10*(i%4+1)), (i/4)*10+((SCREEN_WIDTH-5*10)/4+30)*(i/4), (SCREEN_WIDTH-5*10)/4, (SCREEN_WIDTH-5*10)/4+30)  atIndex:i];
-            viewItem.delegate = self;
-            viewItem.model = _dataList[i];
-            [bgView addSubview:viewItem];
-            [viewItemArr addObject:viewItem];
+        
+        FZViewItem* viewItem = [[FZViewItem alloc]initWithFrame:CGRectMake(i/8*SCREEN_WIDTH+(SCREEN_WIDTH-5*10)/4*(i%4)+(10*(i%4+1)), ((i/4)%2)*10+((SCREEN_WIDTH-5*10)/4+30)*((i/4)%2), (SCREEN_WIDTH-5*10)/4, (SCREEN_WIDTH-5*10)/4+30)  atIndex:i];
+        
+        viewItem.delegate = self;
+        
+        viewItem.model = _dataList[i];
+        
+        [_scrollView addSubview:viewItem];
+        
+        [viewItemArr addObject:viewItem];
+        
+
+        
+        
     }
     
+    //添加加号
+    CGPoint point = [self viewPointAtIndex:_dataList.count];
     
-        //添加加号
-        CGPoint point = [self viewPointAtIndex:_dataList.count];
-        _addButton.frame = CGRectMake(point.x, point.y, _addButton.frame.size.width, _addButton.frame.size.height);
-        [bgView addSubview:_addButton];
-        [viewItemArr addObject:_addButton];
+    _addButton.frame = CGRectMake(point.x, point.y, _addButton.frame.size.width, _addButton.frame.size.height);
     
+    [_scrollView addSubview:_addButton];
+    
+    [viewItemArr addObject:_addButton];
     
     //点击其他地方，编辑状态消失
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     
+    tapGesture.delegate = self;
     
-    
-    [self.view addGestureRecognizer:tapGesture];
+    [_scrollView addGestureRecognizer:tapGesture];
     
     
 }
 - (void)tapAction:(UITapGestureRecognizer*)tapGestureRecognizer{
 
-    for (FZViewItem* view in bgView.subviews) {
+    for (FZViewItem* view in _scrollView.subviews) {
         
         if ([view respondsToSelector:@selector(endEditingState)]) {
             
@@ -139,11 +173,16 @@
 }
 //根据坐标获取当前view是第几个
 - (NSInteger)viewIndexforPoint:(CGPoint)point{
-
-    NSInteger a = point.x/SCREEN_WIDTH*4;
+    
+    NSInteger pointX = [[[NSNumber alloc]initWithFloat:point.x] integerValue];
+    
+    NSInteger screen_width = [[[NSNumber alloc]initWithFloat:SCREEN_WIDTH] integerValue];
+    
+    NSInteger a = (pointX%screen_width)/SCREEN_WIDTH*4;
+    
     NSInteger b = point.y/((SCREEN_WIDTH-5*10)/4+30);
     
-    return 4*b+a;
+    return pointX/screen_width*8 + 4*b+a;
     
 
 }
@@ -151,7 +190,7 @@
 - (CGPoint)viewPointAtIndex:(NSInteger)index{
 
     
-    return  CGPointMake((SCREEN_WIDTH-5*10)/4*(index%4)+(10*(index%4+1)), (index/4)*10+((SCREEN_WIDTH-5*10)/4+30)*(index/4));
+    return  CGPointMake(index/8*SCREEN_WIDTH+(SCREEN_WIDTH-5*10)/4*(index%4)+(10*(index%4+1)), ((index/4)%2)*10+((SCREEN_WIDTH-5*10)/4+30)*((index/4)%2));
 
 }
 - (void)addButtonAction:(NSDictionary*)dict{
@@ -160,17 +199,17 @@
     
     NSInteger i = viewItemArr.count-1;
     
-    FZViewItem* viewItem = [[FZViewItem alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-5*10)/4*(i%4)+(10*(i%4+1)), (i/4)*10+((SCREEN_WIDTH-5*10)/4+30)*(i/4), (SCREEN_WIDTH-5*10)/4, (SCREEN_WIDTH-5*10)/4+30)  atIndex:i];
+    FZViewItem* viewItem = [[FZViewItem alloc]initWithFrame:CGRectMake(i/8*SCREEN_WIDTH+(SCREEN_WIDTH-5*10)/4*(i%4)+(10*(i%4+1)), ((i/4)%2)*10+((SCREEN_WIDTH-5*10)/4+30)*((i/4)%2), (SCREEN_WIDTH-5*10)/4, (SCREEN_WIDTH-5*10)/4+30)  atIndex:i];
     
     viewItem.model = dict;
     
     viewItem.delegate = self;
     
-    [bgView addSubview:viewItem];
+    [_scrollView addSubview:viewItem];
     
     [viewItemArr insertObject:viewItem atIndex:i];
 
-    [_addButton setFrame:CGRectMake((SCREEN_WIDTH-5*10)/4*((i+1)%4)+(10*((i+1)%4+1)), ((i+1)/4)*10+((SCREEN_WIDTH-5*10)/4+30)*((i+1)/4), 100,100)];
+    [_addButton setFrame:CGRectMake((i+1)/8*SCREEN_WIDTH+(SCREEN_WIDTH-5*10)/4*((i+1)%4)+(10*((i+1)%4+1)), (((i+1)/4)%2)*10+((SCREEN_WIDTH-5*10)/4+30)*(((i+1)/4)%2), 100,100)];
     
     [_dataList addObject:dict];
     
@@ -191,10 +230,11 @@
      [[NSUserDefaults standardUserDefaults]setObject:_dataList forKey:@"currentViewItemData"];
     
 }
+
 #pragma mark - FZViewDelegate
 - (void)ViewItemEnterEditingMode:(FZViewItem*)viewItem{
 
-    for (FZViewItem* view  in bgView.subviews) {
+    for (FZViewItem* view  in _scrollView.subviews) {
         
         if ([view respondsToSelector:@selector(enterEditingState)]) {
             
@@ -207,13 +247,20 @@
 
 }
 - (void)viewItemMovingWithItem:(FZViewItem*)viewItem withGesture:(UILongPressGestureRecognizer*)gesture withPoint:(CGPoint)oldPoint{
+    
+    CGPoint pointInView = [gesture locationInView:self.view];
 
     CGRect oldFrame = viewItem.frame;
     
-    CGPoint newPoint = [gesture locationInView:bgView];
+    CGPoint newPoint = [gesture locationInView:_scrollView];
+    
+    NSLog(@"%f",newPoint.x);
+    NSLog(@"%f",newPoint.y );
     
     oldFrame.origin.x = newPoint.x - oldPoint.x;
     oldFrame.origin.y = newPoint.y - oldPoint.y;
+    
+    
     
     viewItem.frame = oldFrame;
     
@@ -221,11 +268,11 @@
 
     NSInteger fromViewIndex = viewItem.index;
 
-    if ((toViewIndex!=fromViewIndex) && (toViewIndex<viewItemArr.count-1 && fromViewIndex<viewItemArr.count-1)) {
+    if ((toViewIndex!=fromViewIndex) && (toViewIndex<viewItemArr.count-1 && fromViewIndex<viewItemArr.count-1) && pointInView.x>30  && pointInView.x<_scrollView.frame.size.width - 30/* 加上>30是防止拖过来图标直接交换位置*/) {
         
         [UIView animateWithDuration:.15 animations:^{
             
-            for (FZViewItem* item in bgView.subviews) {
+            for (FZViewItem* item in _scrollView.subviews) {
                 
                 if ([item isKindOfClass:[FZViewItem class]] ) {
                     
@@ -247,6 +294,31 @@
         
     }
     
+    //翻页
+    if (pointInView.x >= _scrollView.frame.size.width - 30) {
+        
+        
+        [_scrollView scrollRectToVisible:CGRectMake(_scrollView.contentOffset.x + _scrollView.frame.size.width, 0, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
+        
+        
+        
+        
+        
+    }else if (pointInView.x < 30) {
+        
+        
+        [_scrollView scrollRectToVisible:CGRectMake(_scrollView.contentOffset.x - _scrollView.frame.size.width, 0, _scrollView.frame.size.width, _scrollView.frame.size.height) animated:YES];
+        
+        
+        
+       
+        
+        
+        
+        
+    }
+
+    
 
 
 }
@@ -254,7 +326,7 @@
     
     NSInteger i = viewItem.index;
     
-    [viewItem setFrame:CGRectMake((SCREEN_WIDTH-5*10)/4*((i)%4)+(10*((i)%4+1)), ((i)/4)*10+((SCREEN_WIDTH-5*10)/4+30)*((i)/4), 100,100)];
+    [viewItem setFrame:CGRectMake(i/8*SCREEN_WIDTH+(SCREEN_WIDTH-5*10)/4*((i)%4)+(10*((i)%4+1)), (((i)/4)%2)*10+((SCREEN_WIDTH-5*10)/4+30)*(((i)/4)%2), 100,100)];
 
 }
 
@@ -268,9 +340,13 @@
     [viewItemArr removeObjectAtIndex:viewItem.index];
     
     [_dataList removeObjectAtIndex:viewItem.index];
+    
     [[NSUserDefaults standardUserDefaults]setObject:_dataList forKey:@"currentViewItemData"];
+    
     NSMutableArray* arr = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults]valueForKey:@"viewItemData"]];
+    
     [arr addObject:viewItem.model];
+    
     [[NSUserDefaults standardUserDefaults]setObject:arr forKey:@"viewItemData"];
     
     //删除之后序号变化，原来i的位置被i+1替代，需要把i+1的序号跟frame改变
@@ -282,7 +358,7 @@
         
         if ([viewItemTemp isKindOfClass:[FZViewItem class]]) {
             
-             viewItemTemp.index = viewItemTemp.index-1;
+            viewItemTemp.index = viewItemTemp.index-1;
             
             viewItemTemp.frame = CGRectMake(point.x, point.y, viewItemTemp.frame.size.width, viewItemTemp.frame.size.height);
         }else{

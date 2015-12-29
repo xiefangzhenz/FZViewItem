@@ -18,6 +18,7 @@
     UILabel* selectLabel;
     
     CGPoint _point;
+    
 
 
 }
